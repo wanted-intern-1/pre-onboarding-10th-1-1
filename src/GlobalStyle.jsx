@@ -26,7 +26,11 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
   body {
+    height: 100vh;
     background-color: #14213D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
