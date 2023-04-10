@@ -1,96 +1,53 @@
+import React from 'react';
+import { useFetch } from '@/hooks';
 import styled from 'styled-components';
-import React, { useState, useRef } from 'react';
-import { SubmitButton, FormInput, PageTitle } from '@/components';
+import { PageTitle, Footer, AuthForm } from '@/components';
+import { ReactComponent as Loading } from '@/assets/loading.svg';
 
-const initialFormState = {
-  email: '',
-  password: '',
-  passwordConfirm: ''
-};
-
-const hintList = {
-  email: '이메일 형식에 맞게 입력해주세요.',
-  password: '8자 이상 입력해주세요.',
-  passwordConfirm: '비밀번호가 일치하지 않습니다.'
-}
 
 export default function SignUp() {
-  const formStateRef = useRef(initialFormState);
-  const [hint, setHint] = useState('');
-  const [disabled, setDisabled] = useState(true);
-  const isEmaliValid = (value) => value.includes('@');
-  const isPasswordValid = (value) => value.length >= 8;
-  const isPasswordConfirmValid = (value) => formStateRef.current.password === value;
+  const {status, error, isLoading, fetchData} = useFetch();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formStateRef.current);
-  }
-  
-  const handleInput = (e) => {
-    const {name, value} = e.target;
-    const {email, password, passwordConfirm} = formStateRef.current;
-    switch (name) {
-      case 'email':
-        if(isEmaliValid(value)) {
-          formStateRef.current[name] = value;
-          setHint('');
-        }
-        else setHint(hintList[name]);
-        break;
-      case 'password':
-        if(isPasswordValid(value)) {
-          formStateRef.current[name] = value;
-          setHint('');
-        }
-        else setHint(hintList[name]);
-        break;
-      case 'passwordConfirm':
-        if(isPasswordConfirmValid(value)) {
-          formStateRef.current[name] = value;
-          setHint('');
-        }
-        else setHint(hintList[name]);
-        break;
+    const userInfo = {
+      email: e.target.email.value,
+      password: e.target.password.value
     }
-    if(email && password && passwordConfirm)
-      setDisabled(false);
+    fetchData('/auth/signup', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
+  if(isLoading) {
+    return (
+      <SignUpSection>
+        <Loading alt="로딩중"/>
+      </SignUpSection>
+    )
   }
 
   return (
-    <SignUpForm onSubmit={submitHandler}>
+    <SignUpSection>
       <PageTitle>SignUp</PageTitle>
-      <FormInput testid="email-input" type="email" placeholder="Email" name="email" onChange={handleInput}>
-        이메일
-      </FormInput>
-      <FormInput testid="password-input" type="password" placeholder="Password" name="password" onChange={handleInput}>
-        비밀번호
-      </FormInput>
-      <FormInput type="password" placeholder="PasswordConfirm" name="passwordConfirm" onChange={handleInput}>
-        비밀번호 확인
-      </FormInput>
-      <SubmitButton type="submit" disabled={disabled} testid="signup-button">
-        SignUp
-      </SubmitButton>
-      <ValidationHint>{hint}</ValidationHint>
-    </SignUpForm>
+      <AuthForm submitHandler={submitHandler} error={error} status={status}/>
+      <Footer />
+    </SignUpSection>
   )
 }
 
-const SignUpForm = styled.form`
-  background: #fff;
+const SignUpSection = styled.section`
   width: 360px;
   height: 640px;
+  background-color: #fff;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   gap: 48px;
   align-items: center;
-  position: relative;
-`;
-
-const ValidationHint = styled.p`
-  position: absolute;
-  color: #F00;
-  top: 70%;
 `
+
