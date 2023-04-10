@@ -3,10 +3,13 @@ import { useFetch } from '@/hooks';
 import styled from 'styled-components';
 import { PageTitle, Footer, AuthForm } from '@/components';
 import { ReactComponent as Loading } from '@/assets/loading.svg';
-
+import { useNavigate } from 'react-router';
 
 export default function SignUp() {
   const {status, error, isLoading, fetchData} = useFetch();
+  const navigate = useNavigate();
+
+  if(status === 201) navigate('/signin');
 
   const submitHandler = async (e) => {
     e.preventDefault();
