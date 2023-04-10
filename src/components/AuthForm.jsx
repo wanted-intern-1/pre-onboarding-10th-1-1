@@ -1,4 +1,4 @@
-import { bool, func } from 'prop-types';
+import { bool, func, number } from 'prop-types';
 import styled from 'styled-components';
 import { FormInput, SubmitButton } from '@/components';
 import React, { useEffect, useRef, useState } from 'react';
@@ -10,7 +10,15 @@ const initialFormState = {
   passwordConfirm: ''
 };
 
-export function AuthForm({submitHandler, error}) {
+const validationHint = {
+  email: '이메일 형식에 맞게 입력해주세요.',
+  password: '8자 이상 입력해주세요.',
+  400: '중복된 이메일입니다.',
+  401: '이메일 혹은 비밀번호를 확인해주세요.',
+  404: '등록되지 않은 회원입니다.',
+}
+
+export function AuthForm({submitHandler, error, status}) {
   const location = useLocation();
   const navigate = useNavigate();
   const formRef = useRef(initialFormState);
@@ -20,7 +28,7 @@ export function AuthForm({submitHandler, error}) {
 
   useEffect(() => {
     if(localStorage.getItem('token')) navigate('/todo');
-    if(error) setHint('이메일 혹은 비밀번호를 확인해주세요.');
+    if(error) setHint(validationHint[status])
   }, []);
 
   const setValue = (name, value) => {
@@ -43,10 +51,6 @@ export function AuthForm({submitHandler, error}) {
       case 'password':
         if(value.length >= 8) setValue(name, value);
         else resetValue(name, '8자 이상 입력해주세요.')
-        break;
-      case 'passwordConfirm':
-        if(Object.is(formRef.current.password, value)) setValue(name, value);
-        else resetValue(name, '비밀번호가 일치하지 않습니다.')
         break;
     }
     if(formRef.current.email && formRef.current.password) setDisabled(false);
@@ -71,7 +75,8 @@ export function AuthForm({submitHandler, error}) {
 
 AuthForm.propTypes = {
   submitHandler: func,
-  error: bool
+  error: bool,
+  status: number
 };
 
 const SignUpForm = styled.form`
