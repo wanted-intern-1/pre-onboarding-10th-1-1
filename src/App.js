@@ -1,4 +1,5 @@
 import React from 'react';
+import Home from './pages/Home';
 import Todo from './pages/Todo';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -10,7 +11,7 @@ function App() {
     <BrowserRouter>
     <GlobalStyle />
       <Routes>
-        <Route path='/' element={<></>}/>
+        <Route path='/' element={<Home />}/>
         <Route path='/signin' element={<SignIn />}/>
         <Route path='/signup' element={<SignUp />}/>
         <Route path='/todo' element={<Todo />}/>
