@@ -1,8 +1,7 @@
 import React from 'react';
 import { useFetch } from '@/hooks';
 import styled from 'styled-components';
-import { PageTitle, Footer, AuthForm } from '@/components';
-import { ReactComponent as Loading } from '@/assets/loading.svg';
+import { PageTitle, Footer, AuthForm, Loading } from '@/components';
 import { useNavigate } from 'react-router';
 
 export default function SignUp() {
@@ -27,11 +26,7 @@ export default function SignUp() {
   }
 
   if(isLoading) {
-    return (
-      <SignUpSection>
-        <Loading alt="로딩중"/>
-      </SignUpSection>
-    )
+    return <Loading />
   }
 
   return (
@@ -50,7 +45,7 @@ const SignUpSection = styled.section`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  gap: 48px;
   align-items: center;
+  gap: 48px;
 `
 

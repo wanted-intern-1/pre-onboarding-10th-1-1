@@ -2,8 +2,7 @@ import React from 'react'
 import { useFetch } from '@/hooks';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import { PageTitle, AuthForm, Footer } from '@/components';
-import { ReactComponent as Loading } from '@/assets/loading.svg';
+import { PageTitle, AuthForm, Footer, Loading } from '@/components';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -30,11 +29,7 @@ export default function SignIn() {
   }
 
   if(isLoading) {
-    return (
-      <SignInSection>
-        <Loading alt="로딩중..."/>
-      </SignInSection>
-    )
+    return <Loading />;
   }
 
   return (
