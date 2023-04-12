@@ -1,11 +1,11 @@
-import React from 'react'
 import { useFetch } from '@/hooks';
-import { FormInput, SubmitButton } from '@/components';
-import { string } from 'prop-types';
 import styled from 'styled-components';
+import React, { useEffect } from 'react';
+import { func, string } from 'prop-types';
+import { FormInput, SubmitButton } from '@/components';
 
-export function CreateTodo({token}) {
-  const {fetchData} = useFetch();
+export function CreateTodo({token, setReFetch}) {
+  const {isLoading, status, fetchData} = useFetch();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -22,6 +22,10 @@ export function CreateTodo({token}) {
     })
     e.target.createTodo.value = '';
   }
+
+  useEffect(() => {
+    if(status === 201) setReFetch((value) => !value);
+  }, [isLoading])
 
   return (
     <CreateTodoForm onSubmit={submitHandler}>
@@ -46,6 +50,7 @@ export function CreateTodo({token}) {
 
 CreateTodo.propTypes = {
   token: string,
+  setReFetch: func
 }
 
 const CreateTodoForm = styled.form`
