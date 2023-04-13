@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { PageTitle, Footer, AuthForm } from '@/components';
 import { useNavigate } from 'react-router';
 import { AccessTokenContext } from '@/context/TokenContext';
+import { useTitle } from '@/hooks';
 
 export default function SignUp() {
+  useTitle("SignUp | TodoList");
+
   const {token} = useContext(AccessTokenContext)
   const navigate = useNavigate();
 
