@@ -2,13 +2,14 @@ import React, { useId } from 'react'
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-export function FormInput ({ testid, type, children, placeholder, name, ...restProps }) {
+export function FormInput ({ testid, type, children, placeholder, name, width="240px", ...restProps }) {
   const id = useId();
 
   return (
     <>
       <A11yHidden htmlFor={id}>{children}</A11yHidden>
       <Input 
+        width={width}
         data-testid={testid}
         type={type} 
         id={id} 
@@ -25,13 +26,14 @@ FormInput.propTypes = {
   type: string,
   children: string,
   placeholder: string,
-  name: string
+  name: string,
+  width: string,
 }
 
 const Input = styled.input`
   padding-left: 8px;
-  width: 240px;
-  height: 40px;
+  width: ${props => props.width};
+  height: 32px;
   border: none;
   border-bottom: 1px solid #000;
   font-size: 16px;
