@@ -6,5 +6,8 @@ module.exports = {
       "@": path.resolve(__dirname, "src/"),
       "@components": path.resolve(__dirname, "src/components"),
     }
+  },
+  devServer: {
+    port: 8080
   }
 }
