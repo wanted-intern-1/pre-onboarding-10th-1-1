@@ -30,6 +30,10 @@ export function AuthForm() {
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
   useEffect(() => {
+    if(status === 201) navigate('/signin');
+  }, [status]);
+
+  useEffect(() => {
     if(data && data.access_token) {
       localStorage.setItem('token', data.access_token);
       setToken(data.access_token);
