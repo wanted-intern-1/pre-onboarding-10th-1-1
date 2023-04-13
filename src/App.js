@@ -13,7 +13,7 @@ function App() {
 
   return (
     <AccessTokenContext.Provider value={{token, setToken}}>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
       <GlobalStyle />
         <Routes>
           <Route path='/' element={<Home />}/>
