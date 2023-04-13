@@ -1,38 +1,20 @@
-import React from 'react';
-import { useFetch } from '@/hooks';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { PageTitle, Footer, AuthForm, Loading } from '@/components';
+import { PageTitle, Footer, AuthForm } from '@/components';
 import { useNavigate } from 'react-router';
 
 export default function SignUp() {
-  const {status, error, isLoading, fetchData} = useFetch();
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
-  if(status === 201) navigate('/signin');
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const userInfo = {
-      email: e.target.email.value,
-      password: e.target.password.value
-    }
-    fetchData('/auth/signup', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userInfo)
-    })
-  }
-
-  if(isLoading) {
-    return <Loading />
-  }
+  useEffect(() => {
+    if(token) navigate('/todo');
+  }, [])
 
   return (
     <SignUpSection>
       <PageTitle>SignUp</PageTitle>
-      <AuthForm submitHandler={submitHandler} error={error} status={status}/>
+      <AuthForm />
       <Footer />
     </SignUpSection>
   )

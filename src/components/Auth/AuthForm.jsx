@@ -1,8 +1,9 @@
-import { bool, func, number } from 'prop-types';
+import { bool, number } from 'prop-types';
 import styled from 'styled-components';
 import { FormInput, SubmitButton } from '@/components';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useFetch } from '@/hooks';
 
 const initialFormState = {
   email: '',
@@ -18,16 +19,23 @@ const validationHint = {
   404: '등록되지 않은 회원입니다.',
 }
 
-export function AuthForm({submitHandler, error, status}) {
+export function AuthForm({error, status}) {
   const location = useLocation();
-  const navigate = useNavigate();
   const formRef = useRef(initialFormState);
   const [hint, setHint] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const {data, fetchData} = useFetch();
+  const navigate = useNavigate();
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
   useEffect(() => {
-    if(localStorage.getItem('token')) navigate('/todo');
+    if(data && data.access_token) {
+      localStorage.setItem('token', data.access_token);
+      navigate('/todo');
+    }
+  }, [data])
+
+  useEffect(() => {
     if(error) setHint(validationHint[status])
   }, []);
 
@@ -57,6 +65,21 @@ export function AuthForm({submitHandler, error, status}) {
     else setDisabled(true);
   }
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const userInfo = {
+      email: e.target.email.value,
+      password: e.target.password.value
+    }
+    fetchData(`/auth/${currentPage.toLocaleLowerCase()}`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
   return (
     <SignUpForm onSubmit={submitHandler}>
       <FormInput testid="email-input" type="email" placeholder="Email" name="email" onInput={inputHandler}>
@@ -74,7 +97,6 @@ export function AuthForm({submitHandler, error, status}) {
 }
 
 AuthForm.propTypes = {
-  submitHandler: func,
   error: bool,
   status: number
 };
@@ -93,4 +115,4 @@ const ValidationHint = styled.span`
   position: absolute;
   top: 60%;
   color: #F00;
-`
+`;
