@@ -12,6 +12,12 @@
 
 ---
 
+## 데모 영상
+
+https://user-images.githubusercontent.com/83108580/231895048-6955cdd6-8a7c-4e30-a8b5-b2b99ae0b7ea.mov
+
+---
+
 ## 주요기능
 
 ### 1. 회원가입
