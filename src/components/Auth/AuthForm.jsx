@@ -1,9 +1,9 @@
-import { bool, number } from 'prop-types';
+import { useFetch } from '@/hooks';
 import styled from 'styled-components';
 import { FormInput, SubmitButton } from '@/components';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useFetch } from '@/hooks';
+import { AccessTokenContext } from '@/context/TokenContext';
 
 const initialFormState = {
   email: '',
@@ -19,25 +19,27 @@ const validationHint = {
   404: '등록되지 않은 회원입니다.',
 }
 
-export function AuthForm({error, status}) {
+export function AuthForm() {
   const location = useLocation();
+  const navigate = useNavigate();
   const formRef = useRef(initialFormState);
   const [hint, setHint] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const {data, fetchData} = useFetch();
-  const navigate = useNavigate();
+  const {isError, status, data, fetchData} = useFetch();
+  const {setToken} = useContext(AccessTokenContext);
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
   useEffect(() => {
     if(data && data.access_token) {
       localStorage.setItem('token', data.access_token);
+      setToken(data.access_token);
       navigate('/todo');
     }
   }, [data])
 
   useEffect(() => {
-    if(error) setHint(validationHint[status])
-  }, []);
+    if(isError) setHint(validationHint[status])
+  }, [isError]);
 
   const setValue = (name, value) => {
     formRef.current[name] = value;
@@ -67,16 +69,16 @@ export function AuthForm({error, status}) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const userInfo = {
-      email: e.target.email.value,
-      password: e.target.password.value
-    }
-    fetchData(`/auth/${currentPage.toLocaleLowerCase()}`, {
+    fetchData({
+      url: `/auth/${currentPage.toLocaleLowerCase()}`,
       method: "POST",
       headers: {
         "Content-type": "application/json"
       },
-      body: JSON.stringify(userInfo)
+      data: {
+        email: e.target.email.value,
+        password: e.target.password.value
+      }
     })
   }
 
@@ -95,11 +97,6 @@ export function AuthForm({error, status}) {
     </SignUpForm>
   )
 }
-
-AuthForm.propTypes = {
-  error: bool,
-  status: number
-};
 
 const SignUpForm = styled.form`
   background: #fff;

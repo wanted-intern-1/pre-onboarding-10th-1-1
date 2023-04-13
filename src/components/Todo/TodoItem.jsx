@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useId, useState } from 'react';
-import { func, object, string } from 'prop-types';
+import { func, object } from 'prop-types';
 import { UpdateTodo, DeleteTodo } from '@/components';
 
-export function TodoItem({data, token, setReFetch}) {
+export function TodoItem({data, setReFetch}) {
   const id = useId();
   const [isChecked, setIsChecked] = useState(data.isCompleted);
 
@@ -15,15 +15,14 @@ export function TodoItem({data, token, setReFetch}) {
     <Item>
       <input type="checkbox" name="complete" id={id} checked={isChecked} onChange={completeHandler}/>
       <Todo htmlFor={id} name="complete">{data.todo}</Todo>
-      <UpdateTodo data={data} isChecked={isChecked} token={token} setReFetch={setReFetch}/>
-      <DeleteTodo id={data.id} token={token} setReFetch={setReFetch} />
+      <UpdateTodo data={data} isChecked={isChecked} setReFetch={setReFetch}/>
+      <DeleteTodo id={data.id} setReFetch={setReFetch} />
     </Item>
   )
 }
 
 TodoItem.propTypes = {
   data: object,
-  token: string,
   setReFetch: func
 }
 

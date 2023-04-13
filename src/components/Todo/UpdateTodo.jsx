@@ -1,14 +1,16 @@
 import { useFetch } from '@/hooks';
 import styled from 'styled-components';
 import { FormInput } from '@/components';
-import React, { useEffect, useState } from 'react';
-import { bool, func, object, string } from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+import { bool, func, object } from 'prop-types';
 import { ReactComponent as CancelUpdate } from '@/assets/return.svg';
 import { ReactComponent as ConfirmUpdate } from '@/assets/confirm.svg';
+import { AccessTokenContext } from '@/context/TokenContext';
 
-export function UpdateTodo({data, isChecked, token, setReFetch}) {
+export function UpdateTodo({data, isChecked, setReFetch}) {
   const [display, setDisplay] = useState(false);
   const {isLoading, status, fetchData} = useFetch();
+  const {token} = useContext(AccessTokenContext);
 
   const clickHandler = (e) => {
     e.preventDefault();
@@ -17,17 +19,17 @@ export function UpdateTodo({data, isChecked, token, setReFetch}) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const todo = {
-      todo: e.target.updateTodo.value,
-      isCompleted: isChecked
-    }
-    fetchData(`/todos/${data.id}`, {
+    fetchData({
+      url: `/todos/${data.id}`,
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(todo)
+      data: {
+        todo: e.target.updateTodo.value,
+        isCompleted: isChecked
+      }
     });
     setDisplay(!display);
   }
@@ -59,7 +61,6 @@ export function UpdateTodo({data, isChecked, token, setReFetch}) {
 
 UpdateTodo.propTypes = {
   data: object,
-  token: string,
   setReFetch: func,
   isChecked: bool
 }

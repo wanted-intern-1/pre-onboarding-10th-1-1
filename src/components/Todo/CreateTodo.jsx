@@ -1,24 +1,26 @@
 import { useFetch } from '@/hooks';
 import styled from 'styled-components';
-import React, { useEffect } from 'react';
-import { func, string } from 'prop-types';
+import React, { useContext, useEffect } from 'react';
+import { func } from 'prop-types';
 import { FormInput, SubmitButton } from '@/components';
+import { AccessTokenContext } from '@/context/TokenContext';
 
-export function CreateTodo({token, setReFetch}) {
+export function CreateTodo({ setReFetch }) {
   const {isLoading, status, fetchData} = useFetch();
+  const {token} = useContext(AccessTokenContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const todo = {
-      todo: e.target.createTodo.value
-    };
-    fetchData(`/todos`, {
+    fetchData({
+      url: '/todos',
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-type": "application/json"
       },
-      body: JSON.stringify(todo)
+      data: {
+        todo: e.target.createTodo.value
+      }
     })
     e.target.createTodo.value = '';
   }
@@ -49,7 +51,6 @@ export function CreateTodo({token, setReFetch}) {
 }
 
 CreateTodo.propTypes = {
-  token: string,
   setReFetch: func
 }
 
