@@ -28,6 +28,8 @@ https://user-images.githubusercontent.com/83108580/231895048-6955cdd6-8a7c-4e30-
 에러가 발생하면, 에러 코드에 맞게 에러메세지가 출력됩니다.
 - ErrorCode 400 : 중복된 이메일 입니다.
 
+![Apr-14-2023 07-31-56](https://user-images.githubusercontent.com/83108580/231897292-e072ea8a-4b7d-426b-b00e-2564e494fad4.gif)
+
 ---
 
 ### 2. 로그인
@@ -41,6 +43,8 @@ https://user-images.githubusercontent.com/83108580/231895048-6955cdd6-8a7c-4e30-
 - ErrorCode 401 : 이메일 혹은 비밀번호를 확인해 주십시오.
 - ErrorCode 404 : 등록되지 않은 사용자입니다.
 
+![Apr-14-2023 07-18-47](https://user-images.githubusercontent.com/83108580/231895606-426cac45-3992-4242-8e05-033e37f1a517.gif)
+
 ---
 
 ### 3. [Create Todo](https://github.com/Majesty-jun/wanted-pre-onboarding-frontend/blob/main/src/components/Todo/CreateTodo.jsx)
@@ -49,6 +53,8 @@ FormInput, SubmitButton 컴포넌트로 이루어져 있습니다.
 SubmitButton 클릭(onSubmit) 시, 입력받은 todo 값을 통해 POST 통신을 진행합니다.
 
 status가 201로 통신에 성공했을 경우, TodoList를 리렌더링하여 생성된 Todo Item을 바로 불러옵니다.
+
+![Apr-14-2023 07-20-41](https://user-images.githubusercontent.com/83108580/231896126-721a05df-53d6-4d39-8b59-18aef0f1a6c9.gif)
 
 ---
 
@@ -69,6 +75,8 @@ cancel-button 클릭 시, update form이 사라지게 됩니다.
 
 status가 200으로 통신에 성공했을 경우, setReFetch값을 반전하여 TodoList를 리렌더링 할 수 있도록 합니다.
 
+![Apr-14-2023 07-22-55](https://user-images.githubusercontent.com/83108580/231896222-f410ab1e-6dcd-42aa-830e-fd2e85e062c4.gif)
+
 ---
 
 ### 6. [Delete Todo](https://github.com/Majesty-jun/wanted-pre-onboarding-frontend/blob/main/src/components/Todo/DeleteTodo.jsx)
@@ -76,3 +84,6 @@ status가 200으로 통신에 성공했을 경우, setReFetch값을 반전하여
 Delete 버튼 컴포넌트 입니다.  
 버튼 클릭시, id값을 비동기 통신을 진행하여 데이터를 삭제합니다.  
 status가 204로 통신에 성공했을 경우, setReFetch값을 반전하여 TodoList를 리렌더링 할 수 있도록 합니다.
+
+![Apr-14-2023 07-21-58](https://user-images.githubusercontent.com/83108580/231896246-0d444277-1e22-4c03-8e4b-2b2c128ac92d.gif)
+
