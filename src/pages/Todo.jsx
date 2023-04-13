@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react';
 import { PageTitle, TodoList } from '@/components';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
+import { AccessTokenContext } from '@/context/TokenContext';
 
 export default function Todo() {
-  const token = localStorage.getItem('token');
+  const {token} = useContext(AccessTokenContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,7 +15,7 @@ export default function Todo() {
   return (
     <TodoSection>
       <PageTitle>Todo List</PageTitle>
-      <TodoList token={token} />
+      <TodoList />
     </TodoSection>
   )
 }
