@@ -23,7 +23,7 @@ export function DeleteTodo({ id, setReFetch }) {
   }, [isLoading])
 
   return (
-    <DeleteButton onClick={clickHandler}>❌</DeleteButton>
+    <DeleteButton data-testid="delete-button" onClick={clickHandler}>❌</DeleteButton>
   )
 }
 

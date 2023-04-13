@@ -40,7 +40,7 @@ export function UpdateTodo({data, isChecked, setReFetch}) {
 
   return (
     <>
-      <UpdateButton onClick={clickHandler}>✏️</UpdateButton>
+      <UpdateButton data-testid="modify-button" onClick={clickHandler}>✏️</UpdateButton>
       {display ? 
         <InputWrapper onSubmit={submitHandler}>
           <FormInput 
@@ -52,8 +52,8 @@ export function UpdateTodo({data, isChecked, setReFetch}) {
           >
             수정사항
           </FormInput>
-          <button type="submit" data-testid="modify-button"><ConfirmUpdate /></button>
-          <button type="button" data-testid="delete-button" onClick={clickHandler}><CancelUpdate /></button>
+          <button type="submit" data-testid="submit-button"><ConfirmUpdate /></button>
+          <button type="button" data-testid="cancel-button" onClick={clickHandler}><CancelUpdate /></button>
         </InputWrapper> : null}
     </>
   )
