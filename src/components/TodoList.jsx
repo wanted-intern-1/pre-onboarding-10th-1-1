@@ -17,8 +17,6 @@ export function TodoList({token}) {
     });
   }, [reFetch]);
 
-  console.log(data);
-
   return (
     <>
       <TodoListSection>
