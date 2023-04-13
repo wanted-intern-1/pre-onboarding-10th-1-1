@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
 import { useFetch } from '@/hooks';
+import styled from 'styled-components';
+import React, { useEffect } from 'react';
 import { func, number, string } from 'prop-types';
 
 export function DeleteTodo({ id, token, setReFetch }) {
@@ -19,7 +20,7 @@ export function DeleteTodo({ id, token, setReFetch }) {
   }, [isLoading])
 
   return (
-    <button onClick={clickHandler}>❌</button>
+    <DeleteButton onClick={clickHandler}>❌</DeleteButton>
   )
 }
 
@@ -28,3 +29,7 @@ DeleteTodo.propTypes = {
   token: string,
   setReFetch: func
 };
+
+const DeleteButton = styled.button`
+  width: 30px;
+`
