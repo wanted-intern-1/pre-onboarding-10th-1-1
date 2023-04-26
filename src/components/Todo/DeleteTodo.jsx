@@ -1,20 +1,15 @@
 import { useFetch } from '@/hooks';
 import styled from 'styled-components';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { func, number, string } from 'prop-types';
-import { AccessTokenContext } from '@/context/TokenContext';
 
 export function DeleteTodo({ id, setReFetch }) {
   const {isLoading, status, fetchData} = useFetch();
-  const {token} = useContext(AccessTokenContext);
 
   const clickHandler = () => {
     fetchData({
       url: `/todos/${id}`,
       method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
     })
   }
 

@@ -7,8 +7,16 @@ export function useFetch() {
   const [data, setData] = useState();
   const [status, setStatus] = useState();
 
-  const customAxios = axios.create({
-    baseURL: 'https://www.pre-onboarding-selection-task.shop'
+  const customAxios = axios.create();
+
+  customAxios.interceptors.request.use((config)=>{
+    const token = localStorage.getItem('token');
+    config.headers= {
+      "Authorization": `Bearer ${token}`,
+      "Content-type": "application/json"
+    };
+    config.baseURL = 'https://www.pre-onboarding-selection-task.shop';
+    return config
   })
 
   const fetchData = async (params)  => {
