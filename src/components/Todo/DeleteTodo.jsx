@@ -4,30 +4,32 @@ import React, { useEffect } from 'react';
 import { func, number, string } from 'prop-types';
 
 export function DeleteTodo({ id, setReFetch }) {
-  const {isLoading, status, fetchData} = useFetch();
+  const { isLoading, status, fetchData } = useFetch();
 
   const clickHandler = () => {
     fetchData({
       url: `/todos/${id}`,
-      method: "DELETE",
-    })
-  }
+      method: 'DELETE',
+    });
+  };
 
   useEffect(() => {
-    if(status === 204) setReFetch((value) => !value);
-  }, [isLoading])
+    if (status === 204) setReFetch((value) => !value);
+  }, [isLoading]);
 
   return (
-    <DeleteButton data-testid="delete-button" onClick={clickHandler}>❌</DeleteButton>
-  )
+    <DeleteButton data-testid="delete-button" onClick={clickHandler}>
+      ❌
+    </DeleteButton>
+  );
 }
 
 DeleteTodo.propTypes = {
   id: number,
   token: string,
-  setReFetch: func
+  setReFetch: func,
 };
 
 const DeleteButton = styled.button`
   width: 30px;
-`
+`;

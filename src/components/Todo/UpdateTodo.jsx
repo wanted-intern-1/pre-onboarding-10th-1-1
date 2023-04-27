@@ -6,38 +6,40 @@ import { bool, func, object } from 'prop-types';
 import { ReactComponent as CancelUpdate } from '@/assets/return.svg';
 import { ReactComponent as ConfirmUpdate } from '@/assets/confirm.svg';
 
-export function UpdateTodo({data, isChecked, setReFetch}) {
+export function UpdateTodo({ data, isChecked, setReFetch }) {
   const [display, setDisplay] = useState(false);
-  const {isLoading, status, fetchData} = useFetch();
+  const { isLoading, status, fetchData } = useFetch();
 
   const clickHandler = (e) => {
     e.preventDefault();
     setDisplay(!display);
-  }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
     fetchData({
       url: `/todos/${data.id}`,
-      method: "PUT",
+      method: 'PUT',
       data: {
         todo: e.target.updateTodo.value,
-        isCompleted: isChecked
-      }
+        isCompleted: isChecked,
+      },
     });
     setDisplay(!display);
-  }
+  };
 
   useEffect(() => {
-    if(status === 200) setReFetch((value) => !value);
+    if (status === 200) setReFetch((value) => !value);
   }, [isLoading]);
 
   return (
     <>
-      <UpdateButton data-testid="modify-button" onClick={clickHandler}>✏️</UpdateButton>
-      {display ? 
+      <UpdateButton data-testid="modify-button" onClick={clickHandler}>
+        ✏️
+      </UpdateButton>
+      {display ? (
         <InputWrapper onSubmit={submitHandler}>
-          <FormInput 
+          <FormInput
             defaultValue={data.todo}
             testid="modify-input"
             type="text"
@@ -46,18 +48,27 @@ export function UpdateTodo({data, isChecked, setReFetch}) {
           >
             수정사항
           </FormInput>
-          <button type="submit" data-testid="submit-button"><ConfirmUpdate /></button>
-          <button type="button" data-testid="cancel-button" onClick={clickHandler}><CancelUpdate /></button>
-        </InputWrapper> : null}
+          <button type="submit" data-testid="submit-button">
+            <ConfirmUpdate />
+          </button>
+          <button
+            type="button"
+            data-testid="cancel-button"
+            onClick={clickHandler}
+          >
+            <CancelUpdate />
+          </button>
+        </InputWrapper>
+      ) : null}
     </>
-  )
+  );
 }
 
 UpdateTodo.propTypes = {
   data: object,
   setReFetch: func,
-  isChecked: bool
-}
+  isChecked: bool,
+};
 
 const InputWrapper = styled.form`
   order: 1;
@@ -67,4 +78,4 @@ const InputWrapper = styled.form`
 
 const UpdateButton = styled.button`
   width: 30px;
-`
+`;

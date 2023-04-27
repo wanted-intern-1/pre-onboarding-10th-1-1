@@ -9,17 +9,17 @@ export function useFetch() {
 
   const customAxios = axios.create();
 
-  customAxios.interceptors.request.use((config)=>{
+  customAxios.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
-    config.headers= {
-      "Authorization": `Bearer ${token}`,
-      "Content-type": "application/json"
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-type': 'application/json',
     };
     config.baseURL = 'https://www.pre-onboarding-selection-task.shop';
-    return config
-  })
+    return config;
+  });
 
-  const fetchData = async (params)  => {
+  const fetchData = async (params) => {
     setIsLoading(true);
     setIsError(false);
     try {
@@ -30,9 +30,9 @@ export function useFetch() {
       setIsError(true);
       setStatus(error.response.data.statusCode);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
-  return {status, isError, data, isLoading, fetchData};
+  return { status, isError, data, isLoading, fetchData };
 }
