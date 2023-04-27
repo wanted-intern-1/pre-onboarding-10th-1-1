@@ -2,14 +2,16 @@ import styled from 'styled-components';
 import React, { useId, useState } from 'react';
 import { func, object } from 'prop-types';
 import { UpdateTodo, DeleteTodo } from '@/components';
+import { useCallback } from 'react';
+import { useEffect } from 'react';
 
 export function TodoItem({data, setReFetch}) {
   const id = useId();
   const [isChecked, setIsChecked] = useState(data.isCompleted);
 
-  const completeHandler = () => {
+  const completeHandler = useCallback( () => {
     setIsChecked((value) => !value);
-  }
+  },[setIsChecked])
 
   return (
     <Item>

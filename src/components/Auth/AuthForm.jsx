@@ -4,7 +4,7 @@ import { FormInput, SubmitButton } from '@/components';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AccessTokenContext } from '@/context/TokenContext';
-
+import validateInput from '../../utils/validator';
 const initialFormState = {
   email: '',
   password: '',
@@ -57,18 +57,13 @@ export function AuthForm() {
 
   const inputHandler = (e) => {
     const {name, value} = e.target;
-    switch (name) {
-      case 'email':
-        if(value.includes('@')) setValue(name, value);
-        else resetValue(name, '이메일 형식에 맞게 입력해주세요.')
-        break;
-      case 'password':
-        if(value.length >= 8) setValue(name, value);
-        else resetValue(name, '8자 이상 입력해주세요.')
-        break;
-    }
+    const { isValid, msg } = validateInput[name](value);
+
+    isValid ? setValue(name,value) : resetValue(name,msg);
+
     if(formRef.current.email && formRef.current.password) setDisabled(false);
     else setDisabled(true);
+
   }
 
   const submitHandler = (e) => {
