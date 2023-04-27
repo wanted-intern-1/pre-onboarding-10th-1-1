@@ -8,7 +8,7 @@ import validateInput from '../../utils/validator';
 const initialFormState = {
   email: '',
   password: '',
-  passwordConfirm: ''
+  passwordConfirm: '',
 };
 
 const validationHint = {
@@ -17,7 +17,7 @@ const validationHint = {
   400: '중복된 이메일입니다.',
   401: '이메일 혹은 비밀번호를 확인해주세요.',
   404: '등록되지 않은 회원입니다.',
-}
+};
 
 export function AuthForm() {
   const location = useLocation();
@@ -25,76 +25,91 @@ export function AuthForm() {
   const formRef = useRef(initialFormState);
   const [hint, setHint] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const {isError, status, data, fetchData} = useFetch();
-  const {setToken} = useContext(AccessTokenContext);
+  const { isError, status, data, fetchData } = useFetch();
+  const { setToken } = useContext(AccessTokenContext);
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
   useEffect(() => {
-    if(status === 201) navigate('/signin');
+    if (status === 201) navigate('/signin');
   }, [status]);
 
   useEffect(() => {
-    if(data && data.access_token) {
+    if (data && data.access_token) {
       localStorage.setItem('token', data.access_token);
       setToken(data.access_token);
       navigate('/todo');
     }
-  }, [data])
+  }, [data]);
 
   useEffect(() => {
-    if(isError) setHint(validationHint[status])
+    if (isError) setHint(validationHint[status]);
   }, [isError]);
 
   const setValue = (name, value) => {
     formRef.current[name] = value;
     setHint('');
-  }
+  };
 
   const resetValue = (name, hint) => {
     formRef.current[name] = '';
     setHint(hint);
-  }
+  };
 
   const inputHandler = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     const { isValid, msg } = validateInput[name](value);
 
-    isValid ? setValue(name,value) : resetValue(name,msg);
+    isValid ? setValue(name, value) : resetValue(name, msg);
 
-    if(formRef.current.email && formRef.current.password) setDisabled(false);
+    if (formRef.current.email && formRef.current.password) setDisabled(false);
     else setDisabled(true);
-
-  }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
     fetchData({
       url: `/auth/${currentPage.toLocaleLowerCase()}`,
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-type": "application/json"
+        'Content-type': 'application/json',
       },
       data: {
         email: e.target.email.value,
-        password: e.target.password.value
-      }
-    })
-  }
+        password: e.target.password.value,
+      },
+    });
+  };
 
   return (
     <SignUpForm onSubmit={submitHandler}>
-      <FormInput testid="email-input" type="email" placeholder="Email" name="email" onInput={inputHandler}>
+      <FormInput
+        testid="email-input"
+        type="email"
+        placeholder="Email"
+        name="email"
+        onInput={inputHandler}
+      >
         이메일
       </FormInput>
-      <FormInput testid="password-input" type="password" placeholder="Password" name="password" onInput={inputHandler}>
+      <FormInput
+        testid="password-input"
+        type="password"
+        placeholder="Password"
+        name="password"
+        onInput={inputHandler}
+      >
         비밀번호
       </FormInput>
       {hint ? <ValidationHint>{hint}</ValidationHint> : null}
-      <SubmitButton type="submit" disabled={disabled} testid={`${currentPage.toLowerCase()}-button`}>
+      <SubmitButton
+        type="submit"
+        disabled={disabled}
+        testid={`${currentPage.toLowerCase()}-button`}
+      >
         {currentPage}
       </SubmitButton>
     </SignUpForm>
-  )
+  );
 }
 
 const SignUpForm = styled.form`
@@ -110,5 +125,5 @@ const SignUpForm = styled.form`
 const ValidationHint = styled.span`
   position: absolute;
   top: 60%;
-  color: #F00;
+  color: #f00;
 `;

@@ -6,21 +6,21 @@ import { AccessTokenContext } from '@/context/TokenContext';
 import { useTitle } from '@/hooks';
 
 export default function Todo() {
-  useTitle("TodoList");
+  useTitle('TodoList');
 
-  const {token} = useContext(AccessTokenContext);
+  const { token } = useContext(AccessTokenContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!token) navigate('/signin');
-  }, [])
+    if (!token) navigate('/signin');
+  }, []);
 
   return (
     <TodoSection>
       <PageTitle>Todo List</PageTitle>
       <TodoList />
     </TodoSection>
-  )
+  );
 }
 
 const TodoSection = styled.section`
@@ -32,4 +32,4 @@ const TodoSection = styled.section`
   gap: 48px;
   align-items: center;
   position: relative;
-`
+`;
