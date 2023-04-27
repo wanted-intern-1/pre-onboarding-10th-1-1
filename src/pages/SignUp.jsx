@@ -6,14 +6,14 @@ import { AccessTokenContext } from '@/context/TokenContext';
 import { useTitle } from '@/hooks';
 
 export default function SignUp() {
-  useTitle("SignUp | TodoList");
+  useTitle('SignUp | TodoList');
 
-  const {token} = useContext(AccessTokenContext)
+  const { token } = useContext(AccessTokenContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(token) navigate('/todo');
-  }, [])
+    if (token) navigate('/todo');
+  }, []);
 
   return (
     <SignUpSection>
@@ -21,7 +21,7 @@ export default function SignUp() {
       <AuthForm />
       <Footer />
     </SignUpSection>
-  )
+  );
 }
 
 const SignUpSection = styled.section`
@@ -33,5 +33,4 @@ const SignUpSection = styled.section`
   justify-content: center;
   align-items: center;
   gap: 48px;
-`
-
+`;

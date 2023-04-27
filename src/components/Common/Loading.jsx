@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LoadingImg } from '@/assets/loading.svg';
 
-
 export function Loading() {
   return (
     <LoadingSection>
-      <LoadingImg alt="로딩중"/>
+      <LoadingImg alt="로딩중" />
     </LoadingSection>
-  )
+  );
 }
 
 const LoadingSection = styled.section`
@@ -19,4 +18,4 @@ const LoadingSection = styled.section`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-`
+`;
