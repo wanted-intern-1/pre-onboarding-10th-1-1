@@ -1,37 +1,36 @@
 import { useFetch } from '@/hooks';
 import styled from 'styled-components';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { func } from 'prop-types';
 import { FormInput, SubmitButton } from '@/components';
-import { AccessTokenContext } from '@/context/TokenContext';
+import { getToken } from '../../utils/token';
 
 export function CreateTodo({ setReFetch }) {
-  const {isLoading, status, fetchData} = useFetch();
-  const {token} = useContext(AccessTokenContext);
+  const { isLoading, status, fetchData } = useFetch();
 
   const submitHandler = (e) => {
     e.preventDefault();
     fetchData({
       url: '/todos',
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-type": "application/json"
+        Authorization: `Bearer ${getToken()}`,
+        'Content-type': 'application/json',
       },
       data: {
-        todo: e.target.createTodo.value
-      }
-    })
+        todo: e.target.createTodo.value,
+      },
+    });
     e.target.createTodo.value = '';
-  }
+  };
 
   useEffect(() => {
-    if(status === 201) setReFetch((value) => !value);
-  }, [isLoading])
+    if (status === 201) setReFetch((value) => !value);
+  }, [isLoading]);
 
   return (
     <CreateTodoForm onSubmit={submitHandler}>
-      <FormInput 
+      <FormInput
         testid="new-todo-input"
         type="text"
         placeholder="Write what you want to do"
@@ -39,20 +38,16 @@ export function CreateTodo({ setReFetch }) {
       >
         Add Todo
       </FormInput>
-      <SubmitButton 
-        type="submit"
-        testid="new-todo-add-button"
-        disabled={false}
-      >
+      <SubmitButton type="submit" testid="new-todo-add-button" disabled={false}>
         Add Todo
       </SubmitButton>
     </CreateTodoForm>
-  )
+  );
 }
 
 CreateTodo.propTypes = {
-  setReFetch: func
-}
+  setReFetch: func,
+};
 
 const CreateTodoForm = styled.form`
   display: flex;
@@ -61,4 +56,4 @@ const CreateTodoForm = styled.form`
   gap: 12px;
   position: absolute;
   bottom: 32px;
-`
+`;
