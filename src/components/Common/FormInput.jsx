@@ -2,7 +2,7 @@ import React, { useId } from 'react'
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-export function FormInput ({ testid, type, children, placeholder, name, width="240px", ...restProps }) {
+export function FormInput ({ testid, type, children, placeholder, name, width="240px", hint = '', ...restProps }) {
   const id = useId();
 
   return (
@@ -17,6 +17,7 @@ export function FormInput ({ testid, type, children, placeholder, name, width="2
         name={name}
         {...restProps}
       />
+      {hint ? <ValidationHint>{hint}</ValidationHint> : null}
     </>
   )
 }
@@ -28,6 +29,7 @@ FormInput.propTypes = {
   placeholder: string,
   name: string,
   width: string,
+  hint : string,
 }
 
 const Input = styled.input`
@@ -64,3 +66,8 @@ const A11yHidden = styled.label`
   }
 `
 
+const ValidationHint = styled.span`
+  position: absolute;
+  top: 60%;
+  color: #f00;
+`;
