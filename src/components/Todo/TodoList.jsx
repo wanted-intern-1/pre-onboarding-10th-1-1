@@ -1,4 +1,4 @@
-import { useGetTodos } from '@/hooks';
+import { useGetTodos, useUpdateTodo } from '@/hooks';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import { TodoItem, CreateTodo } from '@/components';
@@ -6,25 +6,25 @@ import { AccessTokenContext } from '@/context/TokenContext';
 import React, { useContext, useEffect, useState } from 'react';
 
 export function TodoList() {
-  const [reFetch, setReFetch] = useState(false);
-  const { token } = useContext(AccessTokenContext);
+  const [todos, setTodos] = useState([]);
+  const { data, refetch } = useGetTodos();
 
-  const { data } = useGetTodos();
+  useEffect(() => {
+    setTodos(data);
+  }, [data]);
 
   return (
     <>
       <TodoListSection>
-        {data ? (
+        {todos ? (
           <List>
-            {data.map((todo) => {
-              return (
-                <TodoItem key={todo.id} data={todo} setReFetch={setReFetch} />
-              );
+            {todos.map((todo) => {
+              return <TodoItem key={todo.id} data={todo} refetch={refetch} />;
             })}
           </List>
         ) : null}
       </TodoListSection>
-      <CreateTodo setReFetch={setReFetch} />
+      <CreateTodo refetch={refetch} />
     </>
   );
 }

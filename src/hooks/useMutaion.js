@@ -1,6 +1,12 @@
 import { useState, useCallback } from 'react';
 
-export const useMutation = (fetchAPI, { onSuccess, onError }) => {
+export const useMutation = (
+  fetchAPI,
+  { onSuccess, onError } = {
+    onSuccess: undefined,
+    onError: undefined,
+  }
+) => {
   const [data, setData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
@@ -29,13 +35,14 @@ export const useMutation = (fetchAPI, { onSuccess, onError }) => {
 
       try {
         const response = await fetchAPI(requestData);
+        console.log('response: >> ', response);
         const responseData = handleResponse(response);
 
         setData(responseData);
-        if (onSuccess) onSuccess(responseData || requestData);
+        onSuccess?.(responseData || requestData);
       } catch (error) {
         setError(error);
-        if (onError) onError(error);
+        onError?.(error);
       } finally {
         setIsLoading(false);
       }

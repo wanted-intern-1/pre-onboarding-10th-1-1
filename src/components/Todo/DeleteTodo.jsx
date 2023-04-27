@@ -1,26 +1,15 @@
-import { useFetch } from '@/hooks';
+import React from 'react';
 import styled from 'styled-components';
-import React, { useContext, useEffect } from 'react';
 import { func, number, string } from 'prop-types';
-import { AccessTokenContext } from '@/context/TokenContext';
+import { useDeleteTodo } from '@/hooks';
 
-export function DeleteTodo({ id, setReFetch }) {
-  const { isLoading, status, fetchData } = useFetch();
-  const { token } = useContext(AccessTokenContext);
+export function DeleteTodo({ id, refetch }) {
+  const { deleteTodo } = useDeleteTodo();
 
-  const clickHandler = () => {
-    fetchData({
-      url: `/todos/${id}`,
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const clickHandler = async () => {
+    await deleteTodo({ id });
+    await refetch();
   };
-
-  useEffect(() => {
-    if (status === 204) setReFetch((value) => !value);
-  }, [isLoading]);
 
   return (
     <DeleteButton data-testid="delete-button" onClick={clickHandler}>
@@ -32,7 +21,7 @@ export function DeleteTodo({ id, setReFetch }) {
 DeleteTodo.propTypes = {
   id: number,
   token: string,
-  setReFetch: func,
+  refetch: func,
 };
 
 const DeleteButton = styled.button`
