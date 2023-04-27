@@ -22,6 +22,7 @@ export const useMutation = (fetchAPI, { onSuccess, onError }) => {
 
     return null;
   };
+
   const mutation = useCallback(
     async (requestData) => {
       setIsLoading(true);
