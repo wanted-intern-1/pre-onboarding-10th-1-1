@@ -14,19 +14,19 @@ function App() {
   const [token, setToken] = useState(jwt);
 
   return (
-    <Suspense fallback={Loading}>
-      <AccessTokenContext.Provider value={{ token, setToken }}>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <GlobalStyle />
+    <AccessTokenContext.Provider value={{ token, setToken }}>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <GlobalStyle />
+        <Suspense fallback={Loading}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/todo" element={<Todo />} />
           </Routes>
-        </BrowserRouter>
-      </AccessTokenContext.Provider>
-    </Suspense>
+        </Suspense>
+      </BrowserRouter>
+    </AccessTokenContext.Provider>
   );
 }
 
