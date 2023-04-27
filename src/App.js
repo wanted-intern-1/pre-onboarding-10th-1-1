@@ -1,7 +1,5 @@
 import React from 'react';
 import Todo from './pages/Todo';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -10,12 +8,13 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import ProtectedRoute from './routes/ProtectedRoute';
+import Sign from './pages/Sign';
 
 const routes = createRoutesFromElements(
   <Route element={<ProtectedRoute />}>
     <Route path="/*" element={<Navigate to="signin" />} />
-    <Route path="/signin" element={<SignIn />} />
-    <Route path="/signup" element={<SignUp />} />
+    <Route path="/signin" element={<Sign type="SignIn" />} />
+    <Route path="/signup" element={<Sign type="SignUp" />} />
     <Route path="/todo" element={<Todo />} />
   </Route>
 );
