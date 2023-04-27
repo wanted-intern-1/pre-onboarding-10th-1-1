@@ -26,6 +26,7 @@ https://user-images.githubusercontent.com/83108580/231895048-6955cdd6-8a7c-4e30-
 회원가입 성공 시, 로그인 페이지로 이동하게 됩니다.
 
 에러가 발생하면, 에러 코드에 맞게 에러메세지가 출력됩니다.
+
 - ErrorCode 400 : 중복된 이메일 입니다.
 
 ![Apr-14-2023 07-31-56](https://user-images.githubusercontent.com/83108580/231897292-e072ea8a-4b7d-426b-b00e-2564e494fad4.gif)
@@ -71,7 +72,7 @@ reFetch state를 선언하고, useEffect의 종속성 배열에 reFetch값을 �
 Update 버튼 컴포넌트 입니다.  
 버튼 클릭 시, Todo 항목 하단에 modify-input 및 check 모양의 submit-button, return모양의 cancel-button이 나타나게 됩니다.  
 modify-input은 기본값으로 todo값을 가지고 있으며, submit-button 클릭 시 id값, 변경된 todo값, 체크박스 체크여부를 통해 비동기 통신을 진행합니다.  
-cancel-button 클릭 시, update form이 사라지게 됩니다.  
+cancel-button 클릭 시, update form이 사라지게 됩니다.
 
 status가 200으로 통신에 성공했을 경우, setReFetch값을 반전하여 TodoList를 리렌더링 할 수 있도록 합니다.
 
@@ -86,4 +87,3 @@ Delete 버튼 컴포넌트 입니다.
 status가 204로 통신에 성공했을 경우, setReFetch값을 반전하여 TodoList를 리렌더링 할 수 있도록 합니다.
 
 ![Apr-14-2023 07-21-58](https://user-images.githubusercontent.com/83108580/231896246-0d444277-1e22-4c03-8e4b-2b2c128ac92d.gif)
-

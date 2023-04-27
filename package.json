@@ -23,7 +23,10 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "husky install",
+    "format": "prettier --cache --write .; git add .",
+    "lint": "eslint --cache ."
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +49,7 @@
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.3",
     "prettier": "^2.8.7",
     "styled-components": "^5.3.9"
   }

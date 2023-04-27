@@ -8,10 +8,10 @@ export function useFetch() {
   const [status, setStatus] = useState();
 
   const customAxios = axios.create({
-    baseURL: 'https://www.pre-onboarding-selection-task.shop'
-  })
+    baseURL: 'https://www.pre-onboarding-selection-task.shop',
+  });
 
-  const fetchData = async (params)  => {
+  const fetchData = async (params) => {
     setIsLoading(true);
     setIsError(false);
     try {
@@ -22,9 +22,9 @@ export function useFetch() {
       setIsError(true);
       setStatus(error.response.data.statusCode);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
-  return {status, isError, data, isLoading, fetchData};
+  return { status, isError, data, isLoading, fetchData };
 }
