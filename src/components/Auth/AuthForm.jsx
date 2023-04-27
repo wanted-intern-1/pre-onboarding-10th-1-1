@@ -1,9 +1,10 @@
-import { useFetch } from '@/hooks';
-import styled from 'styled-components';
-import { FormInput, SubmitButton } from '@/components';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { AccessTokenContext } from '@/context/TokenContext';
+import { useFetch, useLogin } from '@/hooks';
+import { FormInput, SubmitButton } from '@/components';
 
 const initialFormState = {
   email: '',
@@ -27,6 +28,9 @@ export function AuthForm() {
   const [disabled, setDisabled] = useState(true);
   const { isError, status, data, fetchData } = useFetch();
   const { setToken } = useContext(AccessTokenContext);
+
+  const { submitCallback } = useLogin();
+
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
   useEffect(() => {
@@ -73,16 +77,9 @@ export function AuthForm() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    fetchData({
-      url: `/auth/${currentPage.toLocaleLowerCase()}`,
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      data: {
-        email: e.target.email.value,
-        password: e.target.password.value,
-      },
+    submitCallback({
+      email: e.target.email.value,
+      password: e.target.password.value,
     });
   };
 
