@@ -25,7 +25,7 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "postinstall": "husky install",
-    "format": "prettier --cache --write .; git add .",
+    "format": "prettier --cache --write . && git add .",
     "lint": "eslint --cache ."
   },
   "eslintConfig": {
