@@ -8,13 +8,6 @@ import { useTitle } from '@/hooks';
 export default function Todo() {
   useTitle('TodoList');
 
-  const { token } = useContext(AccessTokenContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token) navigate('/signin');
-  }, []);
-
   return (
     <TodoSection>
       <PageTitle>Todo List</PageTitle>

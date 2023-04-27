@@ -1,4 +1,4 @@
-import { useFetch } from '@/hooks';
+import { useGetTodos } from '@/hooks';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import { TodoItem, CreateTodo } from '@/components';
@@ -6,19 +6,10 @@ import { AccessTokenContext } from '@/context/TokenContext';
 import React, { useContext, useEffect, useState } from 'react';
 
 export function TodoList() {
-  const { data, fetchData } = useFetch();
   const [reFetch, setReFetch] = useState(false);
   const { token } = useContext(AccessTokenContext);
 
-  useEffect(() => {
-    fetchData({
-      url: '/todos',
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }, [reFetch]);
+  const { data } = useGetTodos();
 
   return (
     <>
