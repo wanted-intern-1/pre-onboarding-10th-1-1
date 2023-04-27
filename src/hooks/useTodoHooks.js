@@ -1,5 +1,5 @@
 import { getTodo } from '@/api';
-import { useFetch } from '../useFetch';
+import { useFetch } from './useFetch';
 
 export const useGetTodos = () => {
   const { data } = useFetch(getTodo);
