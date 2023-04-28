@@ -28,7 +28,7 @@ export function AuthForm() {
     email: '',
     password: '',
   });
-  const userData = useDebounce(userInput);
+  const debouncedInput = useDebounce(userInput);
 
   const inputHandler = useCallback((e) => {
     const { name, value } = e.target;
@@ -37,25 +37,28 @@ export function AuthForm() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    submitCallback({
-      email: e.target.email.value,
-      password: e.target.password.value,
-    });
+    submitCallback(userInput);
   };
 
-  const emailHint = emailValidator(userData.email)
-    ? ''
-    : userData.email.length === 0
-    ? ''
-    : validationHint.email;
+  const getHint = (validator, input, message) =>
+    validator(input) ? '' : input.length === 0 ? '' : message;
 
-  const passwordHint = passwordValidator(userData.password)
-    ? ''
-    : userData.password.length === 0
-    ? ''
-    : validationHint.password;
-
+  const emailHint = getHint(
+    emailValidator,
+    debouncedInput.email,
+    validationHint.email
+  );
+  const passwordHint = getHint(
+    passwordValidator,
+    debouncedInput.password,
+    validationHint.password
+  );
   const hint = emailHint || passwordHint;
+
+  const isButtonDisabled =
+    !emailValidator(userInput.email) ||
+    !passwordValidator(userInput.password) ||
+    hint;
 
   return (
     <SignUpForm onSubmit={submitHandler}>
@@ -81,13 +84,7 @@ export function AuthForm() {
       </FormInput>
       <SubmitButton
         type="submit"
-        disabled={
-          !(
-            emailValidator(userInput.email) &&
-            passwordValidator(userInput.password) &&
-            !hint
-          )
-        }
+        disabled={isButtonDisabled}
         testid={`${currentPage.toLowerCase()}-button`}
       >
         {currentPage}
