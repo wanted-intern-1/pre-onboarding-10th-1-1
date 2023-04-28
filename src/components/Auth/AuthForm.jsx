@@ -20,7 +20,7 @@ export function AuthForm() {
 
   const [hint, setHint] = useState('');
 
-  const { submitCallback } = useAuth(currentPage);
+  const { submitCallback, error } = useAuth(currentPage);
   const [userInput, setUserInput] = useState({
     email: '',
     password: '',
