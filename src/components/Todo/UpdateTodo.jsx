@@ -3,20 +3,21 @@ import { bool, func, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { FormInput } from '@/components';
-import { useUpdateTodo } from '@/hooks';
+import { useTodo } from '@/hooks';
 import { ReactComponent as ConfirmUpdate } from '@/assets/confirm.svg';
 import { ReactComponent as CancelUpdate } from '@/assets/return.svg';
 
 export function UpdateTodo({ data, isChecked, refetch }) {
   const [display, setDisplay] = useState(false);
-  const { updateTodo } = useUpdateTodo();
+  const { updateTodo } = useTodo();
+  const { mutate } = updateTodo();
 
   const clickHandler = () => setDisplay(!display);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    await updateTodo({
+    await mutate({
       id: data.id,
       todo: e.target.updateTodo.value,
       isCompleted: isChecked,

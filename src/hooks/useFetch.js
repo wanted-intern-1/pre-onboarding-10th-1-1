@@ -9,12 +9,8 @@ export const useFetch = (fetchAPI) => {
     try {
       setIsLoading(true);
 
-      const response = await fetchAPI();
-      if (response.status !== 200) {
-        throw new Error('데이터를 가져오는 중 에러가 발생했습니다.');
-      }
-
-      setData(response.data);
+      const responseData = await fetchAPI();
+      setData(responseData);
     } catch (error) {
       setError(error);
     } finally {

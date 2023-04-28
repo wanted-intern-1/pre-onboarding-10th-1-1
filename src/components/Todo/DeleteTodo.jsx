@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { func, number, string } from 'prop-types';
-import { useDeleteTodo } from '@/hooks';
+import { useTodo } from '@/hooks';
 
 export function DeleteTodo({ id, refetch }) {
-  const { deleteTodo } = useDeleteTodo();
+  const { deleteTodo } = useTodo();
+  const { mutate } = deleteTodo();
 
   const clickHandler = async () => {
-    await deleteTodo({ id });
+    await mutate({ id });
     await refetch();
   };
 

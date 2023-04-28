@@ -1,23 +1,37 @@
-import { getTodo, createTodo, updateTodo, deleteTodo } from '@/api';
+import {
+  getTodo as getTodoAPI,
+  createTodo as createTodoAPI,
+  updateTodo as updateTodoAPI,
+  deleteTodo as deleteTodoAPI,
+} from '@/api';
 import { useFetch } from './useFetch';
 import { useMutation } from './useMutaion';
 
-export const useGetTodos = () => {
-  const { data, refetch } = useFetch(getTodo);
-  return { data, refetch };
-};
+export const useTodo = () => {
+  const getTodos = () => {
+    const { data, refetch } = useFetch(getTodoAPI);
+    return { data, refetch };
+  };
 
-export const useCreateTodo = () => {
-  const [createTodoMutation] = useMutation(createTodo);
-  return { createTodo: createTodoMutation };
-};
+  const createTodo = () => {
+    const [mutation] = useMutation(createTodoAPI);
+    return { mutate: mutation };
+  };
 
-export const useUpdateTodo = () => {
-  const [updateTodoMutation] = useMutation(updateTodo);
-  return { updateTodo: updateTodoMutation };
-};
+  const updateTodo = () => {
+    const [mutation] = useMutation(updateTodoAPI);
+    return { mutate: mutation };
+  };
 
-export const useDeleteTodo = () => {
-  const [deleteTodoMutation] = useMutation(deleteTodo);
-  return { deleteTodo: deleteTodoMutation };
+  const deleteTodo = () => {
+    const [mutation] = useMutation(deleteTodoAPI);
+    return { mutate: mutation };
+  };
+
+  return {
+    getTodos,
+    createTodo,
+    updateTodo,
+    deleteTodo,
+  };
 };

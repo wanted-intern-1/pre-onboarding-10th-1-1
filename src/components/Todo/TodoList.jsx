@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
-import { useGetTodos } from '@/hooks';
+import { useTodo } from '@/hooks';
 import { CreateTodo, TodoItem } from '@/components';
 
 export function TodoList() {
   const [todos, setTodos] = useState([]);
-  const { data, refetch } = useGetTodos();
+  const { getTodos } = useTodo();
+  const { data, refetch } = getTodos();
 
   useEffect(() => {
     setTodos(data);
