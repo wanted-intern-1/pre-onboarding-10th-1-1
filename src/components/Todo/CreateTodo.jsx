@@ -2,16 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-import { useCreateTodo } from '@/hooks';
+import { useTodo } from '@/hooks';
 import { FormInput, SubmitButton } from '@/components';
 
 export function CreateTodo({ refetch }) {
-  const { createTodo } = useCreateTodo();
+  const { createTodo } = useTodo();
+  const { mutate } = createTodo();
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    await createTodo({ todo: e.target.createTodo.value });
+    await mutate({ todo: e.target.createTodo.value });
     e.target.createTodo.value = '';
     await refetch();
   };

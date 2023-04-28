@@ -11,32 +11,12 @@ export const useMutation = (
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
 
-  const handleResponse = (response) => {
-    if (response.status !== 200 && response.status !== 201) {
-      const { error, message, statusCode } = response.data;
-      throw new Error(
-        `statusCode: ${statusCode}, message: ${message}, error: ${error}`
-      );
-    }
-
-    if (
-      response.headers['content-type'] &&
-      response.headers['content-type'].includes('application/json')
-    ) {
-      return response.data;
-    }
-
-    return null;
-  };
-
   const mutation = useCallback(
     async (requestData) => {
       setIsLoading(true);
 
       try {
-        const response = await fetchAPI(requestData);
-        console.log('response: >> ', response);
-        const responseData = handleResponse(response);
+        const responseData = await fetchAPI(requestData);
 
         setData(responseData);
         onSuccess?.(responseData || requestData);
