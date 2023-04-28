@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useFetch, useDebounce } from '@/hooks';
+import { useDebounce } from '@/hooks';
 import {
   emailValidator,
   passwordValidator,
@@ -11,12 +11,19 @@ import styled from 'styled-components';
 import { FormInput, SubmitButton } from '@/components';
 import { useAuth } from '@/hooks';
 
+const validationHint = {
+  email: '이메일 형식에 맞게 입력해주세요.',
+  password: '8자 이상 입력해주세요.',
+  400: '중복된 이메일입니다.',
+  401: '이메일 혹은 비밀번호를 확인해주세요.',
+  404: '등록되지 않은 회원입니다.',
+};
+
 export function AuthForm() {
   const location = useLocation();
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
   const [hint, setHint] = useState('');
-  const [disabled, setDisabled] = useState(true);
 
   const { submitCallback } = useAuth(currentPage);
   const [userInput, setUserInput] = useState({
