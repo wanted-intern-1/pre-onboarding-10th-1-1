@@ -1,9 +1,8 @@
-import { useGetTodos, useUpdateTodo } from '@/hooks';
-import { string } from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { TodoItem, CreateTodo } from '@/components';
-import { AccessTokenContext } from '@/context/TokenContext';
-import React, { useContext, useEffect, useState } from 'react';
+import { string } from 'prop-types';
+import { useGetTodos } from '@/hooks';
+import { CreateTodo, TodoItem } from '@/components';
 
 export function TodoList() {
   const [todos, setTodos] = useState([]);

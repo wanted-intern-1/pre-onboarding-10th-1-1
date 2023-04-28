@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { func } from 'prop-types';
 
 import { useCreateTodo } from '@/hooks';
 import { FormInput, SubmitButton } from '@/components';
-import { func } from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
 export function CreateTodo({ refetch }) {
   const { createTodo } = useCreateTodo();
 
@@ -35,7 +34,7 @@ export function CreateTodo({ refetch }) {
 }
 
 CreateTodo.propTypes = {
-  setReFetch: func,
+  refetch: func,
 };
 
 const CreateTodoForm = styled.form`

@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { AccessTokenContext } from '@/context/TokenContext';
-import { useFetch, useAuth } from '@/hooks';
 import { FormInput, SubmitButton } from '@/components';
+import { useAuth } from '@/hooks';
 
 const initialFormState = {
   email: '',
@@ -12,42 +11,23 @@ const initialFormState = {
   passwordConfirm: '',
 };
 
-const validationHint = {
-  email: '이메일 형식에 맞게 입력해주세요.',
-  password: '8자 이상 입력해주세요.',
-  400: '중복된 이메일입니다.',
-  401: '이메일 혹은 비밀번호를 확인해주세요.',
-  404: '등록되지 않은 회원입니다.',
-};
+// const validationHint = {
+//   email: '이메일 형식에 맞게 입력해주세요.',
+//   password: '8자 이상 입력해주세요.',
+//   400: '중복된 이메일입니다.',
+//   401: '이메일 혹은 비밀번호를 확인해주세요.',
+//   404: '등록되지 않은 회원입니다.',
+// };
 
 export function AuthForm() {
   const location = useLocation();
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
-  const navigate = useNavigate();
   const formRef = useRef(initialFormState);
   const [hint, setHint] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const { isError, status, data, fetchData } = useFetch();
-  const { setToken } = useContext(AccessTokenContext);
 
   const { submitCallback } = useAuth(currentPage);
-
-  useEffect(() => {
-    if (status === 201) navigate('/signin');
-  }, [status]);
-
-  useEffect(() => {
-    if (data && data.access_token) {
-      localStorage.setItem('token', data.access_token);
-      setToken(data.access_token);
-      navigate('/todo');
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (isError) setHint(validationHint[status]);
-  }, [isError]);
 
   const setValue = (name, value) => {
     formRef.current[name] = value;
