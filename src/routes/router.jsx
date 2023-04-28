@@ -8,11 +8,13 @@ import { ProtectedRoute } from './ProtectedRoute';
 
 const Router = () => {
   return (
-    <Routes element={<ProtectedRoute />}>
-      <Route path="/" element={<Home />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/todo" element={<Todo />} />
+    <Routes>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/todo" element={<Todo />} />
+      </Route>
     </Routes>
   );
 };
