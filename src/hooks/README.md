@@ -53,7 +53,7 @@ export default function SignIn() {
 
 ---
 
-## [uesDebounce](https://github.com/wanted-intern-1/pre-onboarding-10th-1-1/blob/develop/src/hooks/useDebounce.jsx)
+## [uesDebounce](https://github.com/wanted-intern-1/pre-onboarding-10th-1-1/blob/develop/src/hooks/useDebounce.js)
 
 - 사용자의 입력을 받을때마다 결과반환을 지연시켜 유저가 일정 시간이 지난 후에 결과를 받을수 있게 하는 훅
 - 0.3초 이내의 입력이 없으면 입력을 마친것으로 판단, 마지막까지 입력한 결과 값을 반환
