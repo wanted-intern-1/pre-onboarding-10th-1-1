@@ -1,42 +1,30 @@
-import { useFetch } from '@/hooks';
-import styled from 'styled-components';
-import { FormInput } from '@/components';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { bool, func, object } from 'prop-types';
-import { ReactComponent as CancelUpdate } from '@/assets/return.svg';
+import styled from 'styled-components';
+
+import { FormInput } from '@/components';
+import { useUpdateTodo } from '@/hooks';
 import { ReactComponent as ConfirmUpdate } from '@/assets/confirm.svg';
-import { AccessTokenContext } from '@/context/TokenContext';
+import { ReactComponent as CancelUpdate } from '@/assets/return.svg';
 
-export function UpdateTodo({ data, isChecked, setReFetch }) {
+export function UpdateTodo({ data, isChecked, refetch }) {
   const [display, setDisplay] = useState(false);
-  const { isLoading, status, fetchData } = useFetch();
-  const { token } = useContext(AccessTokenContext);
+  const { updateTodo } = useUpdateTodo();
 
-  const clickHandler = (e) => {
-    e.preventDefault();
-    setDisplay(!display);
-  };
+  const clickHandler = () => setDisplay(!display);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    fetchData({
-      url: `/todos/${data.id}`,
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      data: {
-        todo: e.target.updateTodo.value,
-        isCompleted: isChecked,
-      },
+
+    await updateTodo({
+      id: data.id,
+      todo: e.target.updateTodo.value,
+      isCompleted: isChecked,
     });
+    await refetch();
+
     setDisplay(!display);
   };
-
-  useEffect(() => {
-    if (status === 200) setReFetch((value) => !value);
-  }, [isLoading]);
 
   return (
     <>
@@ -72,7 +60,7 @@ export function UpdateTodo({ data, isChecked, setReFetch }) {
 
 UpdateTodo.propTypes = {
   data: object,
-  setReFetch: func,
+  refetch: func,
   isChecked: bool,
 };
 

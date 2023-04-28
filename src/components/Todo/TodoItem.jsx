@@ -1,17 +1,13 @@
-import styled from 'styled-components';
 import React, { useId, useState } from 'react';
+import styled from 'styled-components';
 import { func, object } from 'prop-types';
 import { UpdateTodo, DeleteTodo } from '@/components';
-import { useCallback } from 'react';
-import { useEffect } from 'react';
 
-export function TodoItem({ data, setReFetch }) {
+export function TodoItem({ data, refetch }) {
   const id = useId();
   const [isChecked, setIsChecked] = useState(data.isCompleted);
 
-  const completeHandler = useCallback(() => {
-    setIsChecked((value) => !value);
-  }, [setIsChecked]);
+  const completeHandler = () => setIsChecked((value) => !value);
 
   return (
     <Item>
@@ -25,15 +21,20 @@ export function TodoItem({ data, setReFetch }) {
       <Todo htmlFor={id} name="complete">
         {data.todo}
       </Todo>
-      <UpdateTodo data={data} isChecked={isChecked} setReFetch={setReFetch} />
-      <DeleteTodo id={data.id} setReFetch={setReFetch} />
+      <UpdateTodo
+        data={data}
+        isChecked={isChecked}
+        refetch={refetch}
+        completeHandler={completeHandler}
+      />
+      <DeleteTodo id={data.id} refetch={refetch} />
     </Item>
   );
 }
 
 TodoItem.propTypes = {
   data: object,
-  setReFetch: func,
+  refetch: func,
 };
 
 const Item = styled.li`

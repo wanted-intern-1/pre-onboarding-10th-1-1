@@ -1,19 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import { PageTitle, TodoList } from '@/components';
+import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router';
-import { AccessTokenContext } from '@/context/TokenContext';
 import { useTitle } from '@/hooks';
+import { PageTitle, TodoList } from '@/components';
 
 export default function Todo() {
   useTitle('TodoList');
-
-  const { token } = useContext(AccessTokenContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token) navigate('/signin');
-  }, []);
 
   return (
     <TodoSection>
