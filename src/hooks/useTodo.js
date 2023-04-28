@@ -5,7 +5,7 @@ import {
   deleteTodo as deleteTodoAPI,
 } from '@/api';
 import { useFetch } from './useFetch';
-import { useMutation } from './useMutaion';
+import { useMutation } from './useMutation';
 
 export const useTodo = () => {
   const getTodos = () => {

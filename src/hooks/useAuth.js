@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { signin, signup } from '@/api';
-import { useMutation } from './useMutaion';
+import { useMutation } from './useMutation';
 
 export const useAuth = (currentPage) => {
   const navigate = useNavigate();
