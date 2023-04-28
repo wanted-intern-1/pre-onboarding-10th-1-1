@@ -1,15 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDebounce } from '@/hooks';
-import {
-  emailValidator,
-  passwordValidator,
-} from '@/components/utils/validator';
-
 import styled from 'styled-components';
 
+import { useDebounce, useAuth } from '@/hooks';
+import { emailValidator, passwordValidator } from '@/utils/validator';
 import { FormInput, SubmitButton } from '@/components';
-import { useAuth } from '@/hooks';
 
 const validationHint = {
   email: '이메일 형식에 맞게 입력해주세요.',
