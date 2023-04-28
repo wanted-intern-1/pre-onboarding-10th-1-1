@@ -9,7 +9,7 @@ export default function Sign({ type }) {
 
   return (
     <StyledSection>
-      <PageTitle>SignIn</PageTitle>
+      <PageTitle>{type}</PageTitle>
       <AuthForm />
       <Footer />
     </StyledSection>
