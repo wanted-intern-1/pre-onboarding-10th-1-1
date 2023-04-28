@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useDebounce } from '@/hooks';
 import {
   emailValidator,
   passwordValidator,
 } from '@/components/utils/validator';
+import { useDebounce } from '@/hooks';
+import React, { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -23,18 +23,12 @@ export function AuthForm() {
   const location = useLocation();
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
-  const [hint, setHint] = useState('');
-
   const { submitCallback } = useAuth(currentPage);
   const [userInput, setUserInput] = useState({
     email: '',
     password: '',
   });
   const userData = useDebounce(userInput);
-
-  useEffect(() => {
-    setHint('');
-  }, [userData]);
 
   const inputHandler = useCallback((e) => {
     const { name, value } = e.target;
@@ -49,6 +43,20 @@ export function AuthForm() {
     });
   };
 
+  const emailHint = emailValidator(userData.email)
+    ? ''
+    : userData.email.length === 0
+    ? ''
+    : validationHint.email;
+
+  const passwordHint = passwordValidator(userData.password)
+    ? ''
+    : userData.password.length === 0
+    ? ''
+    : validationHint.password;
+
+  const hint = emailHint || passwordHint;
+
   return (
     <SignUpForm onSubmit={submitHandler}>
       <FormInput
@@ -57,13 +65,7 @@ export function AuthForm() {
         placeholder="Email"
         name="email"
         onChange={inputHandler}
-        hint={
-          emailValidator(userData.email)
-            ? ''
-            : userData.email.length === 0
-            ? ''
-            : validationHint.email
-        }
+        hint={emailHint}
       >
         이메일
       </FormInput>
@@ -73,13 +75,7 @@ export function AuthForm() {
         placeholder="Password"
         name="password"
         onChange={inputHandler}
-        hint={
-          passwordValidator(userData.password)
-            ? ''
-            : userData.password.length === 0
-            ? ''
-            : validationHint.password
-        }
+        hint={passwordHint}
       >
         비밀번호
       </FormInput>
