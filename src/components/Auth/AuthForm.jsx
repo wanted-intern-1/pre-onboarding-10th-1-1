@@ -1,59 +1,38 @@
 import React, { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useFetch, useDebounce } from '@/hooks';
+import {
+  emailValidator,
+  passwordValidator,
+} from '@/components/utils/validator';
+
 import styled from 'styled-components';
 
 import { FormInput, SubmitButton } from '@/components';
 import { useAuth } from '@/hooks';
 
-const initialFormState = {
-  email: '',
-  password: '',
-  passwordConfirm: '',
-};
-
-// const validationHint = {
-//   email: '이메일 형식에 맞게 입력해주세요.',
-//   password: '8자 이상 입력해주세요.',
-//   400: '중복된 이메일입니다.',
-//   401: '이메일 혹은 비밀번호를 확인해주세요.',
-//   404: '등록되지 않은 회원입니다.',
-// };
-
 export function AuthForm() {
   const location = useLocation();
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
-  const formRef = useRef(initialFormState);
   const [hint, setHint] = useState('');
   const [disabled, setDisabled] = useState(true);
 
   const { submitCallback } = useAuth(currentPage);
+  const [userInput, setUserInput] = useState({
+    email: '',
+    password: '',
+  });
+  const userData = useDebounce(userInput);
 
-  const setValue = (name, value) => {
-    formRef.current[name] = value;
+  useEffect(() => {
     setHint('');
-  };
+  }, [userData]);
 
-  const resetValue = (name, hint) => {
-    formRef.current[name] = '';
-    setHint(hint);
-  };
-
-  const inputHandler = (e) => {
+  const inputHandler = useCallback((e) => {
     const { name, value } = e.target;
-    switch (name) {
-      case 'email':
-        if (value.includes('@')) setValue(name, value);
-        else resetValue(name, '이메일 형식에 맞게 입력해주세요.');
-        break;
-      case 'password':
-        if (value.length >= 8) setValue(name, value);
-        else resetValue(name, '8자 이상 입력해주세요.');
-        break;
-    }
-    if (formRef.current.email && formRef.current.password) setDisabled(false);
-    else setDisabled(true);
-  };
+    setUserInput((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -70,7 +49,14 @@ export function AuthForm() {
         type="email"
         placeholder="Email"
         name="email"
-        onInput={inputHandler}
+        onChange={inputHandler}
+        hint={
+          emailValidator(userData.email)
+            ? ''
+            : userData.email.length === 0
+            ? ''
+            : validationHint.email
+        }
       >
         이메일
       </FormInput>
@@ -79,18 +65,31 @@ export function AuthForm() {
         type="password"
         placeholder="Password"
         name="password"
-        onInput={inputHandler}
+        onChange={inputHandler}
+        hint={
+          passwordValidator(userData.password)
+            ? ''
+            : userData.password.length === 0
+            ? ''
+            : validationHint.password
+        }
       >
         비밀번호
       </FormInput>
-      {hint ? <ValidationHint>{hint}</ValidationHint> : null}
       <SubmitButton
         type="submit"
-        disabled={disabled}
+        disabled={
+          !(
+            emailValidator(userInput.email) &&
+            passwordValidator(userInput.password) &&
+            !hint
+          )
+        }
         testid={`${currentPage.toLowerCase()}-button`}
       >
         {currentPage}
       </SubmitButton>
+      {hint ? <ValidationHint>{hint}</ValidationHint> : null}
     </SignUpForm>
   );
 }
@@ -104,7 +103,6 @@ const SignUpForm = styled.form`
   align-items: center;
   position: relative;
 `;
-
 const ValidationHint = styled.span`
   position: absolute;
   top: 60%;
