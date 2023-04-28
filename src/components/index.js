@@ -3,7 +3,6 @@ export * from './Auth/Footer';
 export * from './Common/PageTitle';
 export * from './Common/FormInput';
 export * from './Common/SubmitButton';
-export * from './Common/Loading';
 export * from './Todo/CreateTodo';
 export * from './Todo/TodoItem';
 export * from './Todo/TodoList';
