@@ -2,11 +2,32 @@
 
 원티드 프리온보딩 프론트엔드 1팀 Best Practice 과제 repo입니다.
 
-배포링크 : https://majesty-jun-todolist.netlify.app/
+배포링크 : [https://majesty-jun-todolist.netlify.app/](https://pre-onboarding-10-1-1.netlify.app/signin)
 
 팀 노션 : https://iamdooddi.notion.site/T1-8d53ec6136ce454e95de6cd5c0e0ed9b
 
 Best Practice 선정시 고려한 부분들 [page link](https://www.notion.so/iamdooddi/pre-onboarding-10th-1-1-cff83f71cb2e4839a6b30c28eaab26d9)
+
+<br />
+
+---
+
+## 팀 소개
+
+| 이름          | github                          |
+| ------------- | ------------------------------- |
+| 엄성현 (팀장) | https://github.com/eomsteve     |
+| 전하준        | https://github.com/Majesty-jun  |
+| 차동엽        | https://github.com/dongyeopca   |
+| 노지원        | https://github.com/no-support   |
+| 손유정        | https://github.com/yuj1818      |
+| 김다현        | https://github.com/Plu457       |
+| 정승덕        | https://github.com/seungdeok    |
+| 최승주        | https://github.com/VictoryJu    |
+| 박우현        | https://github.com/woohyun-park |
+| 갈미현        | https://github.com/Kal-MH       |
+
+---
 
 ---
 
@@ -20,6 +41,71 @@ Best Practice 선정시 고려한 부분들 [page link](https://www.notion.so/ia
 ## 데모 영상
 
 https://user-images.githubusercontent.com/83108580/231895048-6955cdd6-8a7c-4e30-a8b5-b2b99ae0b7ea.mov
+
+<br />
+
+---
+
+## 프로젝트 구조
+
+<details>
+<summary>구조</summary>
+<div markdown="1">
+
+```
+📦src
+ ┣ 📂api
+ ┃ ┣ 📜auth.js
+ ┃ ┣ 📜client.js
+ ┃ ┣ 📜index.js
+ ┃ ┗ 📜todo.js
+ ┣ 📂assets
+ ┃ ┣ 📜confirm.svg
+ ┃ ┣ 📜loading.svg
+ ┃ ┗ 📜return.svg
+ ┣ 📂components
+ ┃ ┣ 📂Auth
+ ┃ ┃ ┣ 📜AuthForm.jsx
+ ┃ ┃ ┗ 📜Footer.jsx
+ ┃ ┣ 📂Common
+ ┃ ┃ ┣ 📜FormInput.jsx
+ ┃ ┃ ┣ 📜PageTitle.jsx
+ ┃ ┃ ┗ 📜SubmitButton.jsx
+ ┃ ┣ 📂Styled
+ ┃ ┃ ┗ 📜StyledSection.jsx
+ ┃ ┣ 📂Todo
+ ┃ ┃ ┣ 📜CreateTodo.jsx
+ ┃ ┃ ┣ 📜DeleteTodo.jsx
+ ┃ ┃ ┣ 📜TodoItem.jsx
+ ┃ ┃ ┣ 📜TodoList.jsx
+ ┃ ┃ ┗ 📜UpdateTodo.jsx
+ ┃ ┗ 📜index.js
+ ┣ 📂hooks
+ ┃ ┣ 📜README.md
+ ┃ ┣ 📜index.js
+ ┃ ┣ 📜useAuth.js
+ ┃ ┣ 📜useDebounce.js
+ ┃ ┣ 📜useFetch.js
+ ┃ ┣ 📜useMutation.js
+ ┃ ┣ 📜useTitle.js
+ ┃ ┗ 📜useTodo.js
+ ┣ 📂pages
+ ┃ ┣ 📜Sign.jsx
+ ┃ ┗ 📜Todo.jsx
+ ┣ 📂routes
+ ┃ ┣ 📜ProtectedRoute.jsx
+ ┃ ┗ 📜router.jsx
+ ┣ 📂utils
+ ┃ ┗ 📜validator.js
+ ┣ 📜App.js
+ ┣ 📜GlobalStyle.jsx
+ ┗ 📜index.js
+```
+
+</div>
+</details>
+
+<br />
 
 ---
 
