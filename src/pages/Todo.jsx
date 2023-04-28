@@ -1,26 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useTitle } from '@/hooks';
 import { PageTitle, TodoList } from '@/components';
+import StyledSection from '../components/Styled/StyledSection';
 
 export default function Todo() {
   useTitle('TodoList');
 
   return (
-    <TodoSection>
+    <StyledSection>
       <PageTitle>Todo List</PageTitle>
       <TodoList />
-    </TodoSection>
+    </StyledSection>
   );
 }
-
-const TodoSection = styled.section`
-  width: 360px;
-  height: 640px;
-  background-color: #fff;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 48px;
-  align-items: center;
-  position: relative;
-`;
