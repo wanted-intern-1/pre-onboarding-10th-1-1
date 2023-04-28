@@ -2,11 +2,11 @@
 
 원티드 프리온보딩 프론트엔드 1팀 Best Practice 과제 repo입니다.
 
-배포링크 : https://pre-onboarding-10-1-1.netlify.app/
+#### 배포링크 : https://pre-onboarding-10-1-1.netlify.app/
 
-팀 노션 : https://iamdooddi.notion.site/T1-8d53ec6136ce454e95de6cd5c0e0ed9b
+#### 팀 노션 : https://iamdooddi.notion.site/T1-8d53ec6136ce454e95de6cd5c0e0ed9b
 
-Best Practice 선정시 고려한 부분들 [page link](https://www.notion.so/iamdooddi/pre-onboarding-10th-1-1-cff83f71cb2e4839a6b30c28eaab26d9)
+#### Best Practice 선정시 고려한 부분들 [page link](https://www.notion.so/iamdooddi/pre-onboarding-10th-1-1-cff83f71cb2e4839a6b30c28eaab26d9)
 
 <br />
 
