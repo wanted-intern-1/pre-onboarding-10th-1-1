@@ -30,7 +30,7 @@ api통신과, 입력 성능 최적화, 위해 커스텀훅을 만들어 사용�
 - 로그인, 회원가입시 주로 사용
 - form의 submit 호출시 api통신 로직 호출
 - 회원가입시 `SignIn` 페이지로 유저 Redirect
-- 로그인시 Token을 저장하는 로직과, `Todo`헤이지로 유저 Redirect
+- 로그인시 Token을 저장하는 로직과, `Todo`페이지로 유저 Redirect
 
 ---
 
