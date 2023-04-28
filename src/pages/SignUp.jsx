@@ -1,19 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { PageTitle, Footer, AuthForm } from '@/components';
-import { useNavigate } from 'react-router';
-import { AccessTokenContext } from '@/context/TokenContext';
 import { useTitle } from '@/hooks';
+import { AuthForm, Footer, PageTitle } from '@/components';
 
 export default function SignUp() {
-  useTitle("SignUp | TodoList");
-
-  const {token} = useContext(AccessTokenContext)
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if(token) navigate('/todo');
-  }, [])
+  useTitle('SignUp | TodoList');
 
   return (
     <SignUpSection>
@@ -21,7 +12,7 @@ export default function SignUp() {
       <AuthForm />
       <Footer />
     </SignUpSection>
-  )
+  );
 }
 
 const SignUpSection = styled.section`
@@ -33,5 +24,4 @@ const SignUpSection = styled.section`
   justify-content: center;
   align-items: center;
   gap: 48px;
-`
-
+`;

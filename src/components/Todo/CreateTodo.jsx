@@ -1,37 +1,25 @@
-import { useFetch } from '@/hooks';
+import React from 'react';
 import styled from 'styled-components';
-import React, { useContext, useEffect } from 'react';
 import { func } from 'prop-types';
+
+import { useTodo } from '@/hooks';
 import { FormInput, SubmitButton } from '@/components';
-import { AccessTokenContext } from '@/context/TokenContext';
 
-export function CreateTodo({ setReFetch }) {
-  const {isLoading, status, fetchData} = useFetch();
-  const {token} = useContext(AccessTokenContext);
+export function CreateTodo({ refetch }) {
+  const { createTodo } = useTodo();
+  const { mutate } = createTodo();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    fetchData({
-      url: '/todos',
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-type": "application/json"
-      },
-      data: {
-        todo: e.target.createTodo.value
-      }
-    })
-    e.target.createTodo.value = '';
-  }
 
-  useEffect(() => {
-    if(status === 201) setReFetch((value) => !value);
-  }, [isLoading])
+    await mutate({ todo: e.target.createTodo.value });
+    e.target.createTodo.value = '';
+    await refetch();
+  };
 
   return (
     <CreateTodoForm onSubmit={submitHandler}>
-      <FormInput 
+      <FormInput
         testid="new-todo-input"
         type="text"
         placeholder="Write what you want to do"
@@ -39,20 +27,16 @@ export function CreateTodo({ setReFetch }) {
       >
         Add Todo
       </FormInput>
-      <SubmitButton 
-        type="submit"
-        testid="new-todo-add-button"
-        disabled={false}
-      >
+      <SubmitButton type="submit" testid="new-todo-add-button" disabled={false}>
         Add Todo
       </SubmitButton>
     </CreateTodoForm>
-  )
+  );
 }
 
 CreateTodo.propTypes = {
-  setReFetch: func
-}
+  refetch: func,
+};
 
 const CreateTodoForm = styled.form`
   display: flex;
@@ -61,4 +45,4 @@ const CreateTodoForm = styled.form`
   gap: 12px;
   position: absolute;
   bottom: 32px;
-`
+`;

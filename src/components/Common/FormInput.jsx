@@ -1,24 +1,34 @@
-import React, { useId } from 'react'
+import React, { useId } from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
-export function FormInput ({ testid, type, children, placeholder, name, width="240px", ...restProps }) {
+export function FormInput({
+  testid,
+  type,
+  children,
+  placeholder,
+  name,
+  width = '240px',
+  hint = '',
+  ...restProps
+}) {
   const id = useId();
 
   return (
     <>
       <A11yHidden htmlFor={id}>{children}</A11yHidden>
-      <Input 
+      <Input
         width={width}
         data-testid={testid}
-        type={type} 
-        id={id} 
-        placeholder={placeholder} 
+        type={type}
+        id={id}
+        placeholder={placeholder}
         name={name}
         {...restProps}
       />
+      {hint ? <ValidationHint>{hint}</ValidationHint> : null}
     </>
-  )
+  );
 }
 
 FormInput.propTypes = {
@@ -28,11 +38,12 @@ FormInput.propTypes = {
   placeholder: string,
   name: string,
   width: string,
-}
+  hint: string,
+};
 
 const Input = styled.input`
   padding-left: 8px;
-  width: ${props => props.width};
+  width: ${(props) => props.width};
   height: 32px;
   border: none;
   border-bottom: 1px solid #000;
@@ -50,7 +61,7 @@ const A11yHidden = styled.label`
   border: 0;
   padding: 0;
   white-space: nowrap;
-  
+
   &:focus {
     position: static;
     clip: auto;
@@ -62,5 +73,10 @@ const A11yHidden = styled.label`
     padding: initial;
     white-space: initial;
   }
-`
+`;
 
+const ValidationHint = styled.span`
+  position: absolute;
+  top: 60%;
+  color: #f00;
+`;
