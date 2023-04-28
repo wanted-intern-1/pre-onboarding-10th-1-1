@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import { useDebounce, useAuth } from '@/hooks';
@@ -18,18 +19,12 @@ export function AuthForm() {
   const location = useLocation();
   const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
 
-  const [hint, setHint] = useState('');
-
   const { submitCallback } = useAuth(currentPage);
   const [userInput, setUserInput] = useState({
     email: '',
     password: '',
   });
-  const userData = useDebounce(userInput);
-
-  useEffect(() => {
-    setHint('');
-  }, [userData]);
+  const debouncedInput = useDebounce(userInput);
 
   const inputHandler = useCallback((e) => {
     const { name, value } = e.target;
@@ -38,11 +33,28 @@ export function AuthForm() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    submitCallback({
-      email: e.target.email.value,
-      password: e.target.password.value,
-    });
+    submitCallback(userInput);
   };
+
+  const getHint = (validator, input, message) =>
+    validator(input) ? '' : input.length === 0 ? '' : message;
+
+  const emailHint = getHint(
+    emailValidator,
+    debouncedInput.email,
+    validationHint.email
+  );
+  const passwordHint = getHint(
+    passwordValidator,
+    debouncedInput.password,
+    validationHint.password
+  );
+  const hint = emailHint || passwordHint;
+
+  const isButtonDisabled =
+    !emailValidator(userInput.email) ||
+    !passwordValidator(userInput.password) ||
+    hint;
 
   return (
     <SignUpForm onSubmit={submitHandler}>
@@ -52,13 +64,7 @@ export function AuthForm() {
         placeholder="Email"
         name="email"
         onChange={inputHandler}
-        hint={
-          emailValidator(userData.email)
-            ? ''
-            : userData.email.length === 0
-            ? ''
-            : validationHint.email
-        }
+        hint={emailHint}
       >
         이메일
       </FormInput>
@@ -68,25 +74,13 @@ export function AuthForm() {
         placeholder="Password"
         name="password"
         onChange={inputHandler}
-        hint={
-          passwordValidator(userData.password)
-            ? ''
-            : userData.password.length === 0
-            ? ''
-            : validationHint.password
-        }
+        hint={passwordHint}
       >
         비밀번호
       </FormInput>
       <SubmitButton
         type="submit"
-        disabled={
-          !(
-            emailValidator(userInput.email) &&
-            passwordValidator(userInput.password) &&
-            !hint
-          )
-        }
+        disabled={isButtonDisabled}
         testid={`${currentPage.toLowerCase()}-button`}
       >
         {currentPage}
