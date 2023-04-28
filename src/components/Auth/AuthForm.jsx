@@ -1,9 +1,10 @@
-import { useFetch } from '@/hooks';
-import styled from 'styled-components';
-import { FormInput, SubmitButton } from '@/components';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { AccessTokenContext } from '@/context/TokenContext';
+import { useFetch, useAuth } from '@/hooks';
+import { FormInput, SubmitButton } from '@/components';
 
 const initialFormState = {
   email: '',
@@ -21,13 +22,16 @@ const validationHint = {
 
 export function AuthForm() {
   const location = useLocation();
+  const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
+
   const navigate = useNavigate();
   const formRef = useRef(initialFormState);
   const [hint, setHint] = useState('');
   const [disabled, setDisabled] = useState(true);
   const { isError, status, data, fetchData } = useFetch();
   const { setToken } = useContext(AccessTokenContext);
-  const currentPage = location.pathname === '/signup' ? 'SignUp' : 'SignIn';
+
+  const { submitCallback } = useAuth(currentPage);
 
   useEffect(() => {
     if (status === 201) navigate('/signin');
@@ -73,16 +77,9 @@ export function AuthForm() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    fetchData({
-      url: `/auth/${currentPage.toLocaleLowerCase()}`,
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      data: {
-        email: e.target.email.value,
-        password: e.target.password.value,
-      },
+    submitCallback({
+      email: e.target.email.value,
+      password: e.target.password.value,
     });
   };
 

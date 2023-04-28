@@ -1,33 +1,21 @@
-import { useFetch } from '@/hooks';
+import React from 'react';
 import styled from 'styled-components';
-import React, { useContext, useEffect } from 'react';
-import { func } from 'prop-types';
+
+import { useCreateTodo } from '@/hooks';
 import { FormInput, SubmitButton } from '@/components';
-import { AccessTokenContext } from '@/context/TokenContext';
+import { func } from 'prop-types';
 
-export function CreateTodo({ setReFetch }) {
-  const { isLoading, status, fetchData } = useFetch();
-  const { token } = useContext(AccessTokenContext);
+// eslint-disable-next-line react/prop-types
+export function CreateTodo({ refetch }) {
+  const { createTodo } = useCreateTodo();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    fetchData({
-      url: '/todos',
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-      data: {
-        todo: e.target.createTodo.value,
-      },
-    });
-    e.target.createTodo.value = '';
-  };
 
-  useEffect(() => {
-    if (status === 201) setReFetch((value) => !value);
-  }, [isLoading]);
+    await createTodo({ todo: e.target.createTodo.value });
+    e.target.createTodo.value = '';
+    await refetch();
+  };
 
   return (
     <CreateTodoForm onSubmit={submitHandler}>
