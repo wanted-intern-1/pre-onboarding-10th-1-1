@@ -9,6 +9,7 @@ export function FormInput({
   placeholder,
   name,
   width = '240px',
+  hint = '',
   ...restProps
 }) {
   const id = useId();
@@ -25,6 +26,7 @@ export function FormInput({
         name={name}
         {...restProps}
       />
+      {hint ? <ValidationHint>{hint}</ValidationHint> : null}
     </>
   );
 }
@@ -36,6 +38,7 @@ FormInput.propTypes = {
   placeholder: string,
   name: string,
   width: string,
+  hint: string,
 };
 
 const Input = styled.input`
@@ -70,4 +73,10 @@ const A11yHidden = styled.label`
     padding: initial;
     white-space: initial;
   }
+`;
+
+const ValidationHint = styled.span`
+  position: absolute;
+  top: 60%;
+  color: #f00;
 `;

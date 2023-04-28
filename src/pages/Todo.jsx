@@ -1,35 +1,15 @@
-import React, { useContext, useEffect } from 'react';
-import { PageTitle, TodoList } from '@/components';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router';
-import { AccessTokenContext } from '@/context/TokenContext';
+import React from 'react';
 import { useTitle } from '@/hooks';
+import { PageTitle, TodoList } from '@/components';
+import StyledSection from '../components/Styled/StyledSection';
 
 export default function Todo() {
   useTitle('TodoList');
 
-  const { token } = useContext(AccessTokenContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token) navigate('/signin');
-  }, []);
-
   return (
-    <TodoSection>
+    <StyledSection>
       <PageTitle>Todo List</PageTitle>
       <TodoList />
-    </TodoSection>
+    </StyledSection>
   );
 }
-
-const TodoSection = styled.section`
-  width: 360px;
-  height: 640px;
-  background-color: #fff;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 48px;
-  align-items: center;
-  position: relative;
-`;
